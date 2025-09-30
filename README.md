@@ -1,6 +1,7 @@
-"# Water Quality Monitoring Project" 
-"Updated by Hemanth"
-"\n## Contribution: Added preprocessing function" "Updtaed by VamsiKirhsnaYadav" 
+# Water Quality Monitoring Project
+
+Updated by Hemanth
+ 
 "## Contribution: Added preprocessing function" 
  
 "Updated by VamsiKirhsnaYadav" 
