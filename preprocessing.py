@@ -26,3 +26,11 @@ def strip_whitespace_rows(rows, keys=None):
 
 if __name__ == "__main__":
     print("preprocessing module: contains read_csv and strip_whitespace_rows")
+
+
+
+# Write a complete Part 2 Python module to preprocessing.py
+# - Includes read_csv() to read CSV files as list of dictionaries
+# - Includes strip_whitespace_rows() to clean string fields
+# - This overwrites any previous content of preprocessing.py
+# - The if __name__ == "__main__" block prints a message when run directly
