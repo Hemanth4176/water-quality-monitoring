@@ -1,1 +1,10 @@
-"This is the readme file about the water monitoring system"
+# Water Quality Monitoring Project
+
+Updated by Hemanth vadapalli
+ 
+"# Contribution: Added preprocessing function" 
+ 
+"Updated by VamsiKirhsnaYadav" 
+
+"testing again for conflict"
+
