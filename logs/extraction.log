@@ -1,0 +1,64 @@
+[START] Extraction (BASE_DIR=D:\STUDY\Software Lab\Project)
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2016.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2017.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2018.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2019.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2020.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2021.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2022.pdf
+[WARN] PDF not found: D:\STUDY\Software Lab\Project\data\raw_pdfs\2023.pdf
+[DONE] Extraction complete
+[START] Extraction (BASE_DIR=D:\STUDY\Software Lab\Project)
+[INFO] Processing 2016.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2016.csv
+[INFO] Processing 2017.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2017.csv
+[INFO] Processing 2018.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2018.csv
+[INFO] Processing 2019.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2019.csv
+[INFO] Processing 2020.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2020.csv
+[INFO] Processing 2021.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2021.csv
+[INFO] Processing 2022.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2022.csv
+[INFO] Processing 2023.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2023.csv
+[DONE] Extraction complete
+[START] Extraction (BASE_DIR=D:\STUDY\Software Lab\Project)
+[INFO] Processing 2016.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2016.csv
+[INFO] Processing 2017.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2017.csv
+[INFO] Processing 2018.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2018.csv
+[INFO] Processing 2019.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2019.csv
+[INFO] Processing 2020.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2020.csv
+[INFO] Processing 2021.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2021.csv
+[INFO] Processing 2022.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2022.csv
+[INFO] Processing 2023.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2023.csv
+[DONE] Extraction complete
+[START] Extraction (BASE_DIR=D:\STUDY\Software Lab\Project)
+[INFO] Processing 2016.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2016.csv
+[INFO] Processing 2017.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2017.csv
+[INFO] Processing 2018.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2018.csv
+[INFO] Processing 2019.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2019.csv
+[INFO] Processing 2020.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2020.csv
+[INFO] Processing 2021.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2021.csv
+[INFO] Processing 2022.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2022.csv
+[INFO] Processing 2023.pdf
+[INFO] Saved extracted CSV: D:\STUDY\Software Lab\Project\data\extracted_csv\water_quality_2023.csv
+[DONE] Extraction complete
