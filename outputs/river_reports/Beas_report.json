@@ -1,0 +1,31 @@
+{
+  "river": "Beas",
+  "records": 88,
+  "stations": 42,
+  "states": [
+    "HIMACHAL\r\nPRADESH",
+    "PUNJAB"
+  ],
+  "bis_verdict": "UNSAFE",
+  "bis_summary_counts": {
+    "SAFE": 41,
+    "UNSAFE": 1
+  },
+  "descriptive_stats": {
+    "pH": {
+      "count": 88,
+      "mean": 7.362,
+      "median": 7.4,
+      "min": 4.1,
+      "max": 8.0,
+      "std": 0.577
+    },
+    "TDS_mg_L": {
+      "count": 0
+    },
+    "turbidity_NTU": {
+      "count": 0
+    }
+  },
+  "notes": "BIS IS 10500:2012 used for pass/fail; WHO guidelines reported for context"
+}

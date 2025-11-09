@@ -1,0 +1,99 @@
+station,state,river,date,pH,TDS_mg_L,turbidity_NTU,bis_status,bis_reasons,who_notes,latitude,longitude
+"BEAS AT D/S
+DEHRAGOPIPUR, H.P.","HIMACHAL
+PRADESH",BEAS,2018-06-30,7.2,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S ALAMPUR,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.5,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S AUT,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S DEHRAGOPIPUR,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.25,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S JAISINGHPUR,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.4,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S KULU,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.4,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S MANALI,"HIMACHAL
+PRADESH",BEAS,2019-06-30,6.9,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S MANDI,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.6,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S PANDOH DAM,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.2,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT D/S PONG DAM,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.18,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT EXIT OF TUNNEL
+DEHAL POWER HOUSE","HIMACHAL
+PRADESH",BEAS,2019-06-30,7.8,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT TALWARA (PONG
+DAM)","HIMACHAL
+PRADESH",BEAS,2019-06-30,8.0,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT U/S KULLU,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.0,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT U/S MANALI,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS AT U/S PANDOH DAM,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.5,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS D/S NADAUN BRIDGE,
+VILL BHADOLI","HIMACHAL
+PRADESH",BEAS,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+BEAS U/S MANDI,"HIMACHAL
+PRADESH",BEAS,2019-06-30,7.7,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"PARVATI BEFORE CONF. TO
+RIVER BEAS","HIMACHAL
+PRADESH",PARVATI,2019-06-30,7.4,,,SAFE,Within acceptable limits,Within WHO guidance,,
+RIVER BEAS AT RAISON,"HIMACHAL
+PRADESH",RIVER,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S MANALSU
+NALLAH","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.0,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S NADAUN
+BRIDGE, VILL BHADOLI","HIMACHAL
+PRADESH",RIVER,2018-06-30,7.4,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S NADAUN
+TOWN AFTER CONFLUENCE OF
+MAAN KHAD","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.2,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S OF WPF AT
+KULLU","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.5,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S OF WPF AT
+MANALI","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS D/S SUJANPUR
+TIHRA","HIMACHAL
+PRADESH",RIVER,2019-06-30,8.0,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS U/S NADAUM
+TOWN","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.7,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"RIVER BEAS U/S SUJANPUR
+TIHRA","HIMACHAL
+PRADESH",RIVER,2019-06-30,7.7,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT 1KM.D/S OF EFFL.
+DISH. POINT AT MUKERIAN ,
+PUNJAB",PUNJAB,BEAS,2019-06-30,7.5,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT D/S CHANGARWA
+VILLAGE, (PUNJAB)",PUNJAB,BEAS,2019-06-30,8.0,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT G.T. ROAD
+UNDER BDG. NEAR
+KAPURTHALA, PUNJA",PUNJAB,BEAS,2018-06-30,7.1,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT G.T. ROAD UNDER
+BDG. NEAR KAPURTHALA",PUNJAB,BEAS,2019-06-30,7.5,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT HARIKE, PUNJAB",PUNJAB,BEAS,2018-06-30,6.7,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT MIRTHAL
+BRIDGE, GURDASPUR,
+PUNJAB",PUNJAB,BEAS,2018-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT MIRTHAL BRIDGE,
+GURDASPUR",PUNJAB,BEAS,2019-06-30,7.4,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT TALWARA H/W,
+PUNJAB",PUNJAB,BEAS,2019-06-30,7.3,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT U/S PATHANKOT,
+PUNJAB",PUNJAB,BEAS,2019-06-30,7.6,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS D/S PATHANKOT,
+PUNJAB",PUNJAB,BEAS,2019-06-30,7.7,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS RIVER, NR VILL KIRI
+AFGHANA, TEHSIL BATALA,
+GURDASPUR",PUNJAB,BEAS,2019-06-30,7.2,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"KALI BEIN FALLING INTO
+RIVER BEAS, PUNJAB",PUNJAB,KALI,2018-06-30,4.1,,,UNSAFE,pH outside 6.5–8.5,WHO: pH outside 6.5–8.5,,
+"BEAS AT D/S AUT, H.P.",,BEAS,2018-06-30,7.6,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT D/S KULU, H.P.",,BEAS,2018-06-30,7.8,,,SAFE,Within acceptable limits,Within WHO guidance,,
+"BEAS AT D/S MANDI, H.P.",,BEAS,2018-06-30,7.7,,,SAFE,Within acceptable limits,Within WHO guidance,,

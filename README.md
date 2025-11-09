@@ -13,3 +13,9 @@ Updated by Hemanth Venkata Sai
  
 "Updated by Aditya" 
 
+
+
+# Temporarily allow activation
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+# Updated python script for river reports by VamsiKrishnaYadav
