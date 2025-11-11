@@ -1,2 +1,8 @@
-numpy>=1.24
-pandas>=2.0
+camelot-py[cv]
+pdfminer.six
+pandas
+numpy
+matplotlib
+seaborn
+tabula-py        # optional fallback; needs Java/JRE installed
+PyPDF2==2.12.1   # helps avoid parser issues with some Camelot builds

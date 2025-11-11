@@ -1,0 +1,60 @@
+{
+  "river": "Beas",
+  "records": 263,
+  "stations": 133,
+  "states": [
+    "HIMACHAL PRADESH",
+    "INTER-STATE",
+    "JAMMU & KASHMIR",
+    "PUNJAB"
+  ],
+  "bis_verdict": "UNSAFE",
+  "bis_summary_counts": {
+    "SAFE": 94,
+    "UNKNOWN": 38,
+    "UNSAFE": 1
+  },
+  "descriptive_stats": {
+    "pH": {
+      "count": 225,
+      "mean": 7.719,
+      "median": 7.75,
+      "min": 5.45,
+      "max": 8.5,
+      "std": 0.29
+    },
+    "conductivity_uScm": {
+      "count": 262,
+      "mean": 236.765,
+      "median": 226.0,
+      "min": 64.5,
+      "max": 1645.0,
+      "std": 160.412
+    },
+    "BOD_mg_L": {
+      "count": 216,
+      "mean": 1.246,
+      "median": 1.0,
+      "min": 0.0,
+      "max": 10.0,
+      "std": 1.404
+    },
+    "DO_mg_L": {
+      "count": 259,
+      "mean": 8.279,
+      "median": 8.35,
+      "min": 2.15,
+      "max": 10.25,
+      "std": 1.044
+    },
+    "nitrate_mg_L": {
+      "count": 219,
+      "mean": 0.927,
+      "median": 0.75,
+      "min": 0.1,
+      "max": 7.5,
+      "std": 0.822
+    }
+  },
+  "notes": "Safe/Unsafe uses BIS IS 10500 pH 6.5–8.5; include turbidity/TDS if available in future datasets."
+}
