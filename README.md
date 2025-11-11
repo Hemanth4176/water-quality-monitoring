@@ -15,7 +15,7 @@ Updated by Hemanth Venkata Sai
 
 
 
-# Temporarily allow activation
-# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+Temporarily allow activation
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-# Updated python script for river reports by VamsiKrishnaYadav
+Updated python script for river reports by VamsiKrishnaYadav
