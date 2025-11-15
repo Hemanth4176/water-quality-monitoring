@@ -160,11 +160,124 @@ def analyze_river(df, river_name, out_dir):
         plt.savefig(os.path.join(out_dir, f"{base}_pH_top5.png"), dpi=150)
         plt.close()
 
+    # 4) Compliance share over time
+    yearly_status = (
+        sub.assign(year=sub["year"].astype(int))
+           .groupby(["year","bis_status"])["station"].nunique()
+           .unstack(fill_value=0)
+           .reset_index()
+    )
+    yearly_status["TOTAL"] = yearly_status.drop(columns=["year"]).sum(axis=1)
+    for k in ["SAFE","UNSAFE","UNKNOWN"]:
+        if k not in yearly_status.columns: yearly_status[k] = 0
+    yearly_status["SAFE_%"] = 100.0 * yearly_status["SAFE"] / yearly_status["TOTAL"].replace(0, np.nan)
+    yearly_status["UNSAFE_%"] = 100.0 * yearly_status["UNSAFE"] / yearly_status["TOTAL"].replace(0, np.nan)
+    plt.figure(figsize=(9,4))
+    plt.plot(yearly_status["year"], yearly_status["SAFE_%"], marker="o", label="Safe %")
+    plt.plot(yearly_status["year"], yearly_status["UNSAFE_%"], marker="o", label="Unsafe %")
+    plt.ylim(0, 100); plt.ylabel("Percent of stations"); plt.xlabel("Year")
+    plt.title(f"{river_name}: compliance share over time")
+    plt.legend(); plt.tight_layout()
+    plt.savefig(os.path.join(out_dir, f"{base}_compliance_over_time.png"), dpi=150); plt.close()
+    yearly_status.to_csv(os.path.join(out_dir, f"{base}_compliance_over_time.csv"), index=False)
+
+    # 5) State-wise compliance (latest year)
+    latest_year = int(latest["year"].max())
+    st_comp = (latest[["state","bis_status","station"]]
+               .drop_duplicates()
+               .groupby(["state","bis_status"])["station"].nunique()
+               .unstack(fill_value=0)
+               .reset_index()
+               .sort_values("state"))
+    for k in ["SAFE","UNSAFE","UNKNOWN"]:
+        if k not in st_comp.columns: st_comp[k] = 0
+    st_comp.to_csv(os.path.join(out_dir, f"{base}_state_compliance_latest.csv"), index=False)
+
+    plt.figure(figsize=(10,4))
+    x = np.arange(len(st_comp["state"]))
+    barw = 0.35
+    plt.bar(x - barw/2, st_comp["SAFE"], width=barw, label="Safe")
+    plt.bar(x + barw/2, st_comp["UNSAFE"], width=barw, label="Unsafe")
+    plt.xticks(x, st_comp["state"], rotation=45, ha="right")
+    plt.ylabel("Stations"); plt.title(f"{river_name}: state-wise compliance (latest year {latest_year})")
+    plt.legend(); plt.tight_layout()
+    plt.savefig(os.path.join(out_dir, f"{base}_state_compliance_latest.png"), dpi=150); plt.close()
+
+    # 6) Metric distributions (latest year)
+    ly = latest.copy()
+    fig, axes = plt.subplots(1, 5, figsize=(15,3), sharex=False)
+    metrics = [
+        ("pH","pH", (5.5,9.0)),
+        ("DO_mg_L","DO (mg/L)", None),
+        ("BOD_mg_L","BOD (mg/L)", None),
+        ("conductivity_uScm","Conductivity (µS/cm)", None),
+        ("nitrate_mg_L","Nitrate (mg/L)", None),
+    ]
+    for ax, (col, label, xr) in zip(axes, metrics):
+        if col in ly.columns and ly[col].notna().any():
+            ax.hist(ly[col].dropna(), bins=15, color="#4C78A8", alpha=0.8)
+            ax.set_title(label, fontsize=10)
+            if xr: ax.set_xlim(*xr)
+        else:
+            ax.set_visible(False)
+    fig.suptitle(f"{river_name}: latest-year metric distributions (stations)", fontsize=12)
+    plt.tight_layout(rect=[0,0,1,0.95])
+    plt.savefig(os.path.join(out_dir, f"{base}_latest_metric_distributions.png"), dpi=150)
+    plt.close()
+
+    # 7) Station ranking by deviation (latest year)
+    rank = (latest[["station","state","pH","pH_dev","bis_status","bis_reasons"]]
+            .sort_values("pH_dev", ascending=False))
+    rank.to_csv(os.path.join(out_dir, f"{base}_station_ranking_latest.csv"), index=False)
+
+    # 8) Longitudinal pH for worst K stations
+    K = 6
+    worst_stations = rank["station"].head(K).tolist()
+    if worst_stations:
+        ts = sub[sub["station"].isin(worst_stations)].copy()
+        plt.figure(figsize=(10,5))
+        for stn in worst_stations:
+            s = ts[ts["station"]==stn].sort_values("year")
+            plt.plot(s["year"], s["pH"], marker="o", label=stn)
+        plt.axhspan(BIS["pH_min"], BIS["pH_max"], color="green", alpha=0.12)
+        plt.title(f"{river_name}: pH trends at top {K} worst stations")
+        plt.xlabel("Year"); plt.ylabel("pH"); plt.legend(fontsize=8)
+        plt.tight_layout()
+        plt.savefig(os.path.join(out_dir, f"{base}_worst_stations_trends.png"), dpi=150)
+        plt.close()
+
+    # 9) Parameter correlation matrix (all years)
+    corr_cols = [c for c in ["pH","DO_mg_L","BOD_mg_L","conductivity_uScm","nitrate_mg_L"] if c in sub.columns]
+    if len(corr_cols) >= 2:
+        corr = sub[corr_cols].astype(float).corr()
+        plt.figure(figsize=(5,4))
+        sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", vmin=-1, vmax=1)
+        plt.title(f"{river_name}: parameter correlation (all years)")
+        plt.tight_layout()
+        plt.savefig(os.path.join(out_dir, f"{base}_param_correlation.png"), dpi=150)
+        plt.close()
+        corr.to_csv(os.path.join(out_dir, f"{base}_param_correlation.csv"))
+
+    # 10) Outlier scatter (latest year)
+    if "conductivity_uScm" in latest.columns and latest["conductivity_uScm"].notna().any():
+        plt.figure(figsize=(8,5))
+        sizes = 20 + 30 * (latest["BOD_mg_L"].fillna(0) / (1 + latest["BOD_mg_L"].fillna(0)))
+        colors = latest["state"].astype('category').cat.codes
+        plt.scatter(latest["pH"], latest["conductivity_uScm"],
+                    c=colors, s=sizes,
+                    cmap="tab10", alpha=0.8, edgecolor="k", linewidths=0.2)
+        plt.axvspan(BIS["pH_min"], BIS["pH_max"], color="green", alpha=0.12)
+        plt.xlabel("pH"); plt.ylabel("Conductivity (µS/cm)")
+        plt.title(f"{river_name}: latest stations (pH vs Conductivity, size ~ BOD)")
+        plt.tight_layout()
+        plt.savefig(os.path.join(out_dir, f"{base}_scatter_ph_conductivity_latest.png"), dpi=150)
+        plt.close()
+
 def main():
     ap = argparse.ArgumentParser(description="River-wise analysis and plots (BIS pH gating)")
-    ap.add_argument("--data", required=True, help="../data/processed/water_quality_2016_2023.csv")
+    ap.add_argument("--data", required=True, help="data/processed/water_quality_2016_2023.csv")
     ap.add_argument("--river", required=True, help='River/waterbody name, e.g., "Beas", "Sutlej"')
-    ap.add_argument("--out-dir", default="../outputs/river_reports")
+    ap.add_argument("--out-dir", default="outputs/river_reports")
     args = ap.parse_args()
 
     df = load_master(args.data)

@@ -18,6 +18,9 @@ Updated by Hemanth Venkata Sai
 Temporarily allow activation
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
+Activating venv
+.\venv\Scripts\activate
+
 Updated python script for river reports by VamsiKrishnaYadav
 
 
