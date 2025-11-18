@@ -26,6 +26,8 @@ Updated python script for river reports by VamsiKrishnaYadav
 
 commands to run the files:
 
+python scripts/webscraping.py   saves data into CPCB_Rivers_Main_Data
+
 python scripts/extract_by_section.py
 
 python scripts/preprocess_merge.py

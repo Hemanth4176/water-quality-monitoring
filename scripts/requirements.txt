@@ -6,3 +6,5 @@ matplotlib
 seaborn
 tabula-py        # optional fallback; needs Java/JRE installed
 PyPDF2==2.12.1   # helps avoid parser issues with some Camelot builds
+requests
+bs4
