@@ -1,0 +1,36 @@
+<!-- app/web/templates/station.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2>Station: {{ station.name }}</h2>
+<p><strong>State:</strong> {{ station.state.name if station.state else "NA" }} |
+<strong>River:</strong> {{ station.river.name if station.river else "NA" }}</p>
+
+<div>
+  <a class="btn btn-primary" href="{{ url_for('web.prediction_page', station_id=station.id) }}">Predict Future</a>
+</div>
+
+<div id="station-content" class="mt-4">
+  <p>Plots will load here...</p>
+</div>
+
+<script>
+const stationName = "{{ station.name }}";
+async function loadStationSummary(){
+  const res = await fetch(`/api/station/${encodeURIComponent(stationName)}/summary`);
+  const data = await res.json();
+  const el = document.getElementById("station-content");
+  if (data.error){
+    el.innerHTML = `<div class="alert alert-warning">${data.error}</div>`;
+    return;
+  }
+  let html = `<h4>Means</h4><ul>`;
+  for (const k in data.means) {
+    html += `<li>${k}: ${data.means[k] ? data.means[k].toFixed(3) : "NA"}</li>`;
+  }
+  html += `</ul>`;
+  html += `<h4>Latest Violations</h4><pre>${JSON.stringify(data.violations_latest, null, 2)}</pre>`;
+  el.innerHTML = html;
+}
+loadStationSummary();
+</script>
+{% endblock %}

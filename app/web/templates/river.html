@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+/* --- Custom Variables for easy color changes --- */
+:root {
+    --primary-blue: #007bff;
+    --primary-green: #28a745;
+    --primary-red: #dc3545;
+    --primary-dark: #343a40;
+    --background-light: #f4f7f6;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft, modern shadow */
+}
+
+/* --- Global & Typography --- */
+body {
+    background-color: var(--background-light) !important;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--primary-dark);
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--primary-blue);
+    margin-top: 1.5rem;
+}
+
+strong {
+    color: var(--primary-green); /* Highlight the river name */
+}
+
+/* --- Component Styling: Cards & Plots --- */
+.card {
+    border: none; /* Remove default card border */
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px); /* Subtle lift on hover */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important; /* Keep top corners rounded */
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* Use Bootstrap color classes but make them slightly darker/richer */
+}
+
+.bg-primary { background-color: #0069d9 !important; }
+.bg-info { background-color: #17a2b8 !important; }
+.bg-danger { background-color: #c82333 !important; }
+.bg-dark { background-color: #343a40 !important; }
+
+
+.plot-img {
+    width: 100%;
+    max-width: 1000px; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid #e9ecef; /* Light border around the plot image */
+}
+
+.heatmap-container {
+    width: 100%;
+    overflow-x: auto; 
+    padding: 15px; /* Add padding for better visual separation */
+}
+
+/* --- Dropdown and Button Styling --- */
+
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s;
+}
+
+.form-select:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.dropdown-wrapper {
+    display: flex;
+    gap: 10px; /* Space between dropdown and button */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dropdown-wrapper .form-select {
+    flex-grow: 1; /* Dropdown takes up most space */
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #1e7e34; /* Darker green on hover */
+    border-color: #1e7e34;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+/* --- Scrollbar Customization for Forecast Dropdown (Already present, slightly enhanced) --- */
+.forecast-dropdown {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.forecast-dropdown::-webkit-scrollbar-thumb {
+    background-color: #a0a0a0; /* Slightly lighter scroll thumb */
+    border-radius: 10px;
+}
+
+</style>
+
+<div class="container mt-4">
+
+    <!-- Back Button
+    <a href="javascript:history.back()" class="btn btn-secondary mb-3">⬅ Back</a> -->
+
+    <h2 class="mb-4">River Analysis: <strong>{{ river_name }}</strong></h2>
+    <h4>Select a Station for Forecasting</h4>
+
+        <div class="dropdown-wrapper">
+            <select id="stationSelect" class="form-select forecast-dropdown">
+                {% for st in stations %}
+                <option value="{{ st.id }}">{{ st.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button class="btn btn-primary mt-2" onclick="goToForecast()">View Forecast</button>
+        </div>
+
+    <!-- Parameter Selection Dropdown -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <label class="form-label">Select Parameter to Analyze:</label>
+            <select id="paramSelect" class="form-select" onchange="loadRiverPlots()">
+                <option value="pH">pH</option>
+                <option value="conductivity_uScm">Conductivity (uS/cm)</option>
+                <option value="BOD_mg_L">BOD (mg/L)</option>
+                <option value="DO_mg_L">DO (mg/L)</option>
+                <option value="nitrate_mg_L">Nitrate (mg/L)</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- Trend Plot -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Trend Plot
+        </div>
+        <div class="card-body text-center">
+            <img id="trendPlot" class="plot-img mb-4" alt="Trend Plot">
+        </div>
+    </div>
+
+    <!-- Heatmap -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            Station-Year Heatmap
+        </div>
+        <div class="heatmap-container">
+            <img id="heatmapPlot" class="plot-img mb-4" alt="Heatmap">
+        </div>
+    </div>
+
+    <!-- Worst 5 Stations -->
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            Worst 5 Stations
+        </div>
+        <div class="card-body text-center">
+            <img id="worstPlot" class="plot-img" alt="Worst 5 Plot">
+        </div>
+    </div>
+
+    <!-- Correlation Plot -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Parameter Correlation Matrix
+        </div>
+        <div class="card-body text-center">
+            <img id="corrPlot" class="plot-img" alt="Correlation Plot">
+        </div>
+    </div>
+
+</div>
+
+
+<!-- <div class="card p-3 shadow-sm">
+    <label>Station within {{ river_name }}</label>
+    <select id="predictStation" class="form-control mb-2"></select>
+
+    <label>Parameter</label>
+    <select id="predictParam" class="form-control mb-2">
+        <option value="pH">pH</option>
+        <option value="DO">DO</option>
+        <option value="BOD">BOD</option>
+        <option value="EC">Conductivity</option>
+        <option value="Nitrate">Nitrate</option>
+    </select> -->
+<!-- 
+    <button onclick="loadForecast()" class="btn btn-primary mt-2 w-100">Predict Future</button>
+</div>
+
+<div id="forecastOutput" class="mt-4"></div> -->
+
+
+<!-- JS to Load Plots --> -->
+<script>
+async function loadRiverPlots() {
+    const param = document.getElementById("paramSelect").value;
+    const riverName = "{{ river_name }}";
+
+    const url = `/api/river/analysis?river=${encodeURIComponent(riverName)}&param=${encodeURIComponent(param)}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    // USE THE BASE64 STRING EXACTLY AS API RETURNS
+    document.getElementById("trendPlot").src = data.trend || "";
+    document.getElementById("heatmapPlot").src = data.heatmap || "";
+    document.getElementById("worstPlot").src = data.worst5 || "";
+    document.getElementById("corrPlot").src = data.correlation || "";
+}
+
+window.onload = loadRiverPlots;
+
+function goToForecast() {
+    const stationId = document.getElementById("stationSelect").value;
+    if (stationId) {
+        window.location.href = `/predict/${stationId}`;
+    }
+}
+</script>
+<!-- <script>
+async function loadRiverPlots() {
+
+    const riverName = "{{ river_name }}";
+    const param = document.getElementById("paramSelect")?.value || "pH";
+
+    const url = `/api/river/analysis?river=${encodeURIComponent(riverName)}&param=${encodeURIComponent(param)}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    document.getElementById("trendPlot").src        = data.pH_trend     ? `data:image/png;base64,${data.pH_trend}` : "";
+    document.getElementById("heatmapPlot").src      = data.pH_heatmap   ? `data:image/png;base64,${data.pH_heatmap}` : "";
+    document.getElementById("worstPlot").src        = data.worst5       ? `data:image/png;base64,${data.worst5}` : "";
+    document.getElementById("corrPlot").src         = data.correlation  ? `data:image/png;base64,${data.correlation}` : "";
+
+    if (Object.keys(data).length === 0)
+        document.getElementById("trendPlot").innerHTML = `<p class='text-danger'>No Plot Data Available</p>`;
+}
+
+window.onload = loadRiverPlots;
+</script> -->
+
+<!-- <script>
+async function loadStationsForRiver() {
+    const river = "{{ river_name }}";
+
+    const res = await fetch(`/api/river/stations?river=${encodeURIComponent(river)}`);
+    const data = await res.json();
+
+    const dropdown = document.getElementById("predictStation");
+    dropdown.innerHTML = "";
+
+    data.stations.forEach(st => {
+        dropdown.innerHTML += `<option value="${st}">${st}</option>`;
+    });
+}
+
+async function loadForecast() {
+    const station = document.getElementById("predictStation").value;
+    const param = document.getElementById("predictParam").value;
+
+    const res = await fetch(`/api/station/${station}/predict/${param}`);
+    const data = await res.json();
+
+    if (data.error) {
+        document.getElementById("forecastOutput").innerHTML =
+            `<div class="alert alert-danger">${data.error}</div>`;
+        return;
+    }
+
+    document.getElementById("forecastOutput").innerHTML = `
+        <h5>Prediction Result</h5>
+        <img src="data:image/png;base64,${data.plot}" style="max-width:100%;">
+    `;
+}
+
+// Load station list when page opens
+window.onload = loadStationsForRiver;
+</script> -->
+
+
+
+{% endblock %}

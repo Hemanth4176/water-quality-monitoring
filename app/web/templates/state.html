@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+/* --- Custom Variables (Easy Color Changes) --- */
+:root {
+    --primary-color: #007bff; /* Blue */
+    --secondary-color: #28a745; /* Green */
+    --background-light: #f4f7f6;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- General Body & Typography --- */
+body {
+    background-color: var(--background-light) !important; /* Override potential Bootstrap default */
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #343a40;
+}
+
+/* --- Main State Heading --- */
+h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    border-bottom: 4px solid var(--primary-color);
+    letter-spacing: 1px;
+}
+
+/* --- Section Headings (Rivers/Stations) --- */
+h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #495057;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--secondary-color);
+    padding-left: 10px;
+}
+
+/* --- Dynamic Content Container (The 'Card') --- */
+#state-info {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    animation: fadeIn 0.8s ease-out; /* Subtle entrance animation */
+}
+
+/* --- Lists (Rivers and Stations) --- */
+ul {
+    list-style: none; /* Remove default bullet points */
+    padding-left: 0;
+}
+
+li {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+li:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background-color: #e9ecef; /* Slight background change on hover */
+}
+
+/* --- Links within Lists --- */
+li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    display: block; /* Make the whole list item clickable area */
+}
+
+li a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* --- Loading & Error Messages --- */
+.alert-warning {
+    /* Custom styling for the error message */
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+/* --- Keyframes for Animation --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+<h2>State: {{ state_name }}</h2>
+
+<div id="state-info" class="mt-4">
+  <p>Loading...</p>
+</div>
+
+<script>
+async function loadStateDetails(){
+    const state = "{{ state_name }}";
+    const res = await fetch(`/api/state/${encodeURIComponent(state)}/details`);
+    const data = await res.json();
+
+    let html = "";
+
+    if (data.error) {
+        html = `<div class="alert alert-warning">${data.error}</div>`;
+        document.getElementById("state-info").innerHTML = html;
+        return;
+    }
+
+    html += `<h4>Rivers in ${state}</h4><ul>`;
+    data.rivers.forEach(r => {
+        html += `<li><a href="/river/${encodeURIComponent(r)}">${r}</a></li>`;
+    });
+    html += `</ul>`;
+
+    html += `<h4>Stations in ${state}</h4><ul>`;
+    data.stations.forEach(s => {
+        // html += `<li><a href="/station/${s}">${s}</a></li>`;
+        html += `<li><a href="/station/${s.id}">${s.name}</a></li>`;
+
+    });
+    html += `</ul>`;
+
+    document.getElementById("state-info").innerHTML = html;
+}
+loadStateDetails();
+</script>
+
+{% endblock %}
