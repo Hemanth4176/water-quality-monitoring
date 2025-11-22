@@ -23,7 +23,6 @@ Activating venv
 
 Updated python script for river reports by VamsiKrishnaYadav
 
-
 commands to run the files:
 
 python scripts/webscraping.py   saves data into CPCB_Rivers_Main_Data
@@ -33,3 +32,8 @@ python scripts/extract_by_section.py
 python scripts/preprocess_merge.py
 
 python river_analysis_and_plots.py --data ../data/processed/water_quality_2016_2023.csv --river "Beas" --out-dir ../outputs/river_reports
+
+
+
+
+complete data is not able to extract so dropping rows with no data in preprocessing step
