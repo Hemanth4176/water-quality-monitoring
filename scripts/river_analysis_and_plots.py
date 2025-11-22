@@ -196,14 +196,12 @@ def analyze_river(df, river_name, out_dir):
         plt.title(f"{river_name}: yearly mean pH by state")
         plt.xlabel("Year")
         plt.ylabel("pH")
-        # Move legend below the plot to avoid covering x‑axis
         plt.legend(loc="upper center", bbox_to_anchor=(0.5, -0.15),
                    ncol=3, fontsize=8)
-        plt.subplots_adjust(bottom=0.25)  # extra space for legend
+        plt.subplots_adjust(bottom=0.25)
         plt.savefig(os.path.join(out_dir, f"{base}_pH_trend.png"), dpi=150,
                     bbox_inches="tight")
         plt.close()
-
 
     # 2) Station x Year pH heatmap
     piv = sub.pivot_table(index="station", columns="year", values="pH", aggfunc="mean")
@@ -228,50 +226,65 @@ def analyze_river(df, river_name, out_dir):
         plt.savefig(os.path.join(out_dir, f"{base}_pH_top5.png"), dpi=150)
         plt.close()
 
-    # 4) BIS pH compliance over time
+    # 4) BIS pH compliance over time (SAFE/UNSAFE/UNKNOWN)
     yearly_bis = (
         sub.assign(year=sub["year"].astype(int))
            .groupby(["year","bis_status"])["station"].nunique()
            .unstack(fill_value=0)
            .reset_index()
     )
-    yearly_bis["TOTAL"] = yearly_bis.drop(columns=["year"]).sum(axis=1)
     for k in ["SAFE","UNSAFE","UNKNOWN"]:
-        if k not in yearly_bis.columns: yearly_bis[k] = 0
-    yearly_bis["SAFE_%"] = 100.0 * yearly_bis["SAFE"] / yearly_bis["TOTAL"].replace(0, np.nan)
-    yearly_bis["UNSAFE_%"] = 100.0 * yearly_bis["UNSAFE"] / yearly_bis["TOTAL"].replace(0, np.nan)
+        if k not in yearly_bis.columns:
+            yearly_bis[k] = 0
+    yearly_bis["TOTAL"]     = yearly_bis["SAFE"] + yearly_bis["UNSAFE"] + yearly_bis["UNKNOWN"]
+    yearly_bis["SAFE_%"]    = 100.0 * yearly_bis["SAFE"]    / yearly_bis["TOTAL"].replace(0, np.nan)
+    yearly_bis["UNSAFE_%"]  = 100.0 * yearly_bis["UNSAFE"]  / yearly_bis["TOTAL"].replace(0, np.nan)
+    yearly_bis["UNKNOWN_%"] = 100.0 * yearly_bis["UNKNOWN"] / yearly_bis["TOTAL"].replace(0, np.nan)
+
     plt.figure(figsize=(10,4))
-    plt.plot(yearly_bis["year"], yearly_bis["SAFE_%"], marker="o", label="Safe % (pH)")
+    plt.plot(yearly_bis["year"], yearly_bis["SAFE_%"],   marker="o", label="Safe % (pH)")
     plt.plot(yearly_bis["year"], yearly_bis["UNSAFE_%"], marker="o", label="Unsafe % (pH)")
-    plt.ylim(0, 100); plt.ylabel("Percent of stations"); plt.xlabel("Year")
+    plt.plot(yearly_bis["year"], yearly_bis["UNKNOWN_%"],marker="o", label="Unknown % (pH)")
+    plt.ylim(0, 100)
+    plt.ylabel("Percent of stations"); plt.xlabel("Year")
     plt.title(f"{river_name}: BIS pH compliance over time")
     plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"{base}_bis_compliance_over_time.png"), dpi=150); plt.close()
-    yearly_bis.to_csv(os.path.join(out_dir, f"{base}_bis_compliance_over_time.csv"), index=False)
+    plt.savefig(os.path.join(out_dir, f"{base}_bis_compliance_over_time.png"),
+                dpi=150, bbox_inches="tight")
+    plt.close()
+    yearly_bis.to_csv(os.path.join(out_dir, f"{base}_bis_compliance_over_time.csv"),
+                      index=False)
 
-    # 5) Composite raw-water compliance over time
+    # 5) Composite raw-water compliance over time (SAFE/UNSAFE/UNKNOWN)
     yearly_raw = (
         sub.assign(year=sub["year"].astype(int))
            .groupby(["year","raw_status"])["station"].nunique()
            .unstack(fill_value=0)
            .reset_index()
     )
-    yearly_raw["TOTAL"] = yearly_raw.drop(columns=["year"]).sum(axis=1)
     for k in ["SAFE","UNSAFE","UNKNOWN"]:
-        if k not in yearly_raw.columns: yearly_raw[k] = 0
-    yearly_raw["SAFE_%"] = 100.0 * yearly_raw["SAFE"] / yearly_raw["TOTAL"].replace(0, np.nan)
-    yearly_raw["UNSAFE_%"] = 100.0 * yearly_raw["UNSAFE"] / yearly_raw["TOTAL"].replace(0, np.nan)
+        if k not in yearly_raw.columns:
+            yearly_raw[k] = 0
+    yearly_raw["TOTAL"]     = yearly_raw["SAFE"] + yearly_raw["UNSAFE"] + yearly_raw["UNKNOWN"]
+    yearly_raw["SAFE_%"]    = 100.0 * yearly_raw["SAFE"]    / yearly_raw["TOTAL"].replace(0, np.nan)
+    yearly_raw["UNSAFE_%"]  = 100.0 * yearly_raw["UNSAFE"]  / yearly_raw["TOTAL"].replace(0, np.nan)
+    yearly_raw["UNKNOWN_%"] = 100.0 * yearly_raw["UNKNOWN"] / yearly_raw["TOTAL"].replace(0, np.nan)
+
     plt.figure(figsize=(10,4))
-    plt.plot(yearly_raw["year"], yearly_raw["SAFE_%"], marker="o", label="Safe % (composite)")
+    plt.plot(yearly_raw["year"], yearly_raw["SAFE_%"],   marker="o", label="Safe % (composite)")
     plt.plot(yearly_raw["year"], yearly_raw["UNSAFE_%"], marker="o", label="Unsafe % (composite)")
-    plt.ylim(0, 100); plt.ylabel("Percent of stations"); plt.xlabel("Year")
+    plt.plot(yearly_raw["year"], yearly_raw["UNKNOWN_%"],marker="o", label="Unknown % (composite)")
+    plt.ylim(0, 100)
+    plt.ylabel("Percent of stations"); plt.xlabel("Year")
     plt.title(f"{river_name}: raw-water composite compliance over time")
     plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"{base}_raw_compliance_over_time.png"), dpi=150); plt.close()
-    yearly_raw.to_csv(os.path.join(out_dir, f"{base}_raw_compliance_over_time.csv"), index=False)
+    plt.savefig(os.path.join(out_dir, f"{base}_raw_compliance_over_time.png"),
+                dpi=150, bbox_inches="tight")
+    plt.close()
+    yearly_raw.to_csv(os.path.join(out_dir, f"{base}_raw_compliance_over_time.csv"),
+                      index=False)
 
-
-        # 6) State-wise compliance (latest year) for both gates
+    # 6) State-wise compliance (latest year) for both gates
     latest_year = int(latest["year"].max())
 
     def state_comp(df_latest, col, tag):
@@ -291,14 +304,12 @@ def analyze_river(df, river_name, out_dir):
         plt.bar(x - barw/2, st["SAFE"], width=barw, label="Safe")
         plt.bar(x + barw/2, st["UNSAFE"], width=barw, label="Unsafe")
 
-        # Rotate x labels and shrink font
         labels = st["state"].astype(str).tolist()
         plt.xticks(x, labels, rotation=45, ha="right", fontsize=8)
 
         plt.ylabel("Stations")
         plt.title(f"{river_name}: {tag} compliance (latest {latest_year})")
         plt.legend()
-        # Extra bottom margin so long labels stay inside figure
         plt.subplots_adjust(bottom=0.3)
         plt.savefig(os.path.join(
             out_dir,
