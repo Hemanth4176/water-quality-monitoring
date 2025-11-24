@@ -1,0 +1,28 @@
+app/web/templates/index.html
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="row">
+  <div class="col-md-3">
+    <div class="card p-3">
+      <h5>Total Stations</h5>
+      <h3>{{ kpis.stations }}</h3>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <h5>Total Rivers</h5>
+      <h3>{{ kpis.rivers }}</h3>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <h5>Years</h5>
+      <h3>{{ kpis.years }}</h3>
+    </div>
+  </div>
+</div>
+
+<hr>
+<p class="text-muted">Use the navigation/search to view station and river pages.</p>
+{% endblock %}
