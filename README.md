@@ -1,7 +1,7 @@
 # Water Quality Monitoring Project
 
 This README documents the **data acquisition, extraction, preprocessing, and analysis** part of the project.  
-(Backend, database, and dashboard components are documented separately.)
+(Backend, database,analysis,dashboard components are documented separately(In All Integration).)
 
 ---
 
