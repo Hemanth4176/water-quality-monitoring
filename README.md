@@ -11,14 +11,10 @@ Activate the virtual environment:
 
 .\venv\Scripts\activate
 
-text
-
 Install dependencies:
 
 cd scripts
 pip install -r requirements.txt
-
-text
 
 ---
 
@@ -44,8 +40,6 @@ water-quality-monitoring/
 └── outputs/
 └── river_reports/ # Per-river CSVs, JSON reports, and visualization PNGs
 
-text
-
 ---
 
 ## 3. Commands to Run the Pipeline
@@ -66,8 +60,6 @@ python scripts/river_analysis_and_plots.py
 --data ../data/processed/water_quality_2016_2023.csv
 --river "Beas"
 --out-dir ../outputs/river_reports
-
-text
 
 (Adjust `--data` and paths if you run from a different working directory.)
 
@@ -98,8 +90,6 @@ text
 - Filters valid station rows based on station-code pattern, maps raw columns to a fixed schema, and writes per‑year CSVs into:
 
 data/extracted_csv_by_section/water_quality_by_section_<year>.csv
-
-text
 
 ---
 
