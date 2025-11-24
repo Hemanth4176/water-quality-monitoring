@@ -24,20 +24,21 @@ pip install -r requirements.txt
 
 water-quality-monitoring/
 ├── data/
-│ ├── raw_pdfs/                  # Optional: manually downloaded PDFs
-│ ├── CPCB_Rivers_Main_Data/     # NWMP river PDFs downloaded via webscraping.py
-│ ├── extracted_csv_by_section/  # Per-year CSVs extracted from PDFs (raw tables)
-│ └── processed/                 # Cleaned & merged CSVs (per-year + master)
+│   ├── raw_pdfs/                 # Optional: manually downloaded PDFs (if any sample kept)
+│   ├── CPCB_Rivers_Main_Data/    # NWMP river PDFs downloaded via webscraping.py
+│   ├── extracted_csv_by_section/ # Per-year CSVs extracted from PDFs (raw tables)
+│   └── processed/                # Cleaned & merged CSVs (per-year + master)
 │
 ├── scripts/
-│ ├── webscraping.py                    # Download NWMP river PDFs from CPCB website
-│ ├── extract_by_section.py             # Extract river/section tables from PDFs to CSV
-│ ├── preprocess_merge.py               # Clean, standardize, and merge yearly CSVs
-│ ├── river_analysis_and_plots.py       # River-wise safety analysis + plots + reports
-│ └── requirements.txt                  # Python dependencies for this pipeline
+│   ├── webscraping.py            # Download NWMP river PDFs from CPCB website
+│   ├── extract_by_section.py     # Extract river/section tables from PDFs to CSV
+│   ├── preprocess_merge.py       # Clean, standardize, and merge yearly CSVs
+│   ├── river_analysis_and_plots.py # River-wise safety analysis + plots + reports
+│   ├── Extract_from_pdf.ipynb    # Exploratory notebook (optional, can be excluded)
+│   └── requirements.txt          # Python dependencies for this pipeline
 │
 └── outputs/
-| └── river_reports/                      # Per-river CSVs, JSON reports, and visualization PNGs
+    └── river_reports/            # Per-river CSVs, JSON reports, and visualization PNGs
 
 ---
 
