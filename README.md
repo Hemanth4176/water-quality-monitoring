@@ -4,7 +4,7 @@
 This document explains the **code structure and purpose of every component** within the project.  
 This repository represents the final integrated system including:
 
-✔ Data extraction and cleaning  
+✔ Data extraction and cleaning
 ✔ Database ingestion
 ✔ Data Analysis
 ✔ REST API backend  
