@@ -5,10 +5,12 @@ This document explains the **code structure and purpose of every component** wit
 This repository represents the final integrated system including:
 
 ✔ Data extraction and cleaning  
-✔ Database ingestion  
+✔ Database ingestion
+✔ Data Analysis
 ✔ REST API backend  
 ✔ Forecasting engine  
 ✔ Interactive web dashboard  
+
 
 ---
 
