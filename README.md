@@ -1,15 +1,20 @@
 
 #  Water Quality Monitoring Dashboard
 
-This document explains the **code structure and purpose of every component** within the project.  
-This repository represents the final integrated system including:
+This document explins the **code structure and purpose of each component** in the project.  
+It represents the final integrated system containing:
 
-✔ Data extraction and cleaning
-✔ Database ingestion
-✔ Data Analysis
+✔ Automated data extraction from CPCB PDFs  
+✔ Data cleaning and preprocessing  
+✔ Database storage and ingestion  
+✔ Analytical pipeline (trend & compliance analysis)  
+✔ Forecasting engine using Machine Learning  
 ✔ REST API backend  
-✔ Forecasting engine  
-✔ Interactive web dashboard  
+✔ Fully interactive Web Dashboard  
+
+---
+
+
 
 
 ---
