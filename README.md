@@ -180,3 +180,172 @@ data/extracted_csv_by_section/water_quality_by_section_<year>.csv
     - State‑wise compliance
     - Parameter correlation
 
+
+##  7. Backend System (Flask + REST API + ORM)
+
+### 7.1 Overview
+
+After preprocessing the master dataset, the system transitions into a **full backend-driven architecture** that supports:
+
+| Feature                                 | Implemented Using                      |
+| --------------------------------------- | -------------------------------------- |
+| REST API for data access                | Flask Blueprints                       |
+| Database storage                        | SQLAlchemy ORM (PostgreSQL/SQLite)     |
+| Web Routing                             | Flask with Jinja Templates             |
+| Search + State/River/Station navigation | Flask routes + AJAX                    |
+| Forecasting                             | Linear Regression Model                |
+| Visualization                           | Matplotlib + Seaborn + Base64 Encoding |
+
+---
+
+##  8. Database Architecture
+
+The system uses **SQLAlchemy ORM** to structure data relationships as:
+
+```
+River  ────<  Station  ────< Measurement
+           \
+            └── State
+```
+
+### Entities Stored:
+
+| Table         | Description                                                        |
+| ------------- | ------------------------------------------------------------------ |
+| `River`       | Unique waterbody name after cleaning                               |
+| `State`       | State in which a sample station exists                             |
+| `Station`     | Physical monitoring station mapped to river/state                  |
+| `Measurement` | Yearly water-quality readings (pH, DO, BOD, nitrate, conductivity) |
+
+---
+
+##  9. Data Ingestion Layer (utils/ingest.py)
+
+This script takes the cleaned CSV and **inserts records into the database**.
+
+Key responsibilities:
+
+* Fix inconsistent names using a **regex-based cleaning system**
+* Prevent duplicate rows via ORM lookups
+* Fill missing columns safely using `_safe(x)` helper
+* Automatically assign fallback station names when missing
+* Map each row into:
+
+```python
+River → State → Station → Measurement
+```
+
+---
+
+##  10. REST API Layer (`app/api/routes.py`)
+
+REST API provides structured JSON responses used by the frontend.
+
+Provides:
+
+| Endpoint                          | Returns                                          |
+| --------------------------------- | ------------------------------------------------ |
+| `/stations`                       | List of valid stations                           |
+| `/station/<id>/measurements`      | Raw yearly measurements                          |
+| `/forecast/<station>/<parameter>` | Prediction model results                         |
+| `/river/<name>/analysis`          | Trend graphs + heatmaps + worst station analysis |
+
+ Formatting rule:
+
+All plots are converted to **Base64 images**, allowing the web UI to embed plots without saving files.
+
+---
+
+##  11. Forecasting Engine (`forecasting.py`)
+
+The ML model was upgraded from Prophet to **Linear Regression**.
+
+### How forecasting works:
+
+1. Extract historical values for a chosen station and parameter
+2. Train linear regression on:
+
+```
+X = year
+Y = parameter (pH, DO, BOD, etc.)
+```
+
+3. Predict future values for selected years
+4. Compute confidence bounds using:
+
+```
+± 1.96 × standard error of residuals
+```
+
+5. Encode prediction plot to Base64 for display in dashboard
+
+Example JSON output:
+
+```json
+[
+  {"ds": "2025", "yhat": 7.12, "yhat_lower": 6.78, "yhat_upper": 7.45}
+]
+```
+
+---
+
+##  12. Dynamic Analysis Engine (`app/analysis/river_analysis.py`)
+
+Adds advanced river insights:
+
+| Graph                | Description                         |
+| -------------------- | ----------------------------------- |
+| Parameter Trend      | State-wise yearly mean values       |
+| Heatmap              | Station × year visualization        |
+| Top-5 Worst Stations | Dynamically based on deviation      |
+| Compliance Graphs    | Safe vs Unsafe percentage over time |
+| Correlation Heatmap  | Parameter relationships             |
+
+All processing is done **on-demand** when user selects a river.
+
+---
+
+##  13. Web Dashboard (Flask Templates + JS)
+
+### Key UI features implemented:
+
+*  Search bar for **station, state, river**
+*  Dynamic dropdown showing only **stations with usable data**
+*  Auto-refresh visualizations when parameter changes
+*  Predictions + analysis presented side-by-side
+*  Navigation with graceful error handling (`not_found.html`)
+
+---
+
+##  14. Major Challenges & Implemented Solutions
+
+| Challenge                              | Solution                                |
+| -------------------------------------- | --------------------------------------- |
+| Messy dataset                          | Standardization + parameter mappings    |
+| Duplicate/Missing rows                 | Measurement-existence filtering         |
+| Forecast inaccuracies                  | Minimum dataset threshold check         |
+| Plot rendering errors                  | Base64 conversion layer                 |
+| Ambiguous text extraction              | Regex-based river name cleanup          |
+| UI showing irrelevant stations         | Dynamic filtering with count validation |
+| Multiple database dependencies         | SQLAlchemy ORM + relationship joins     |
+| Search returning invalid pages         | Safe validation + redirect fallback     |
+| API ↔ UI Connectivity                  | Structured JSON response format         |
+| Parameter switching not updating plots | Fully dynamic plotting pipeline         |
+
+---
+
+##  15. Technologies Used
+
+| Layer           | Tool/Framework                |
+| --------------- | ----------------------------- |
+| Web Framework   | Flask                         |
+| API             | REST using Flask Blueprints   |
+| Database        | SQLAlchemy ORM                |
+| ML Model        | Linear Regression             |
+| Visualization   | Matplotlib + Seaborn          |
+| Frontend        | HTML + Bootstrap + JavaScript |
+| Encoding        | Base64 image streaming        |
+| Data Processing | Python, Pandas, Numpy         |
+
+---
+
