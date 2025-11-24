@@ -20,25 +20,24 @@ pip install -r requirements.txt
 
 ## 2. Code Organization and Role of Each File
 
-### 2.1 Top-level Structure (this module)
+### 2.1 Top-level Structure 
 
 water-quality-monitoring/
 ├── data/
-│ ├── raw_pdfs/ # Optional: manually downloaded PDFs
-│ ├── CPCB_Rivers_Main_Data/ # NWMP river PDFs downloaded via webscraping.py
-│ ├── extracted_csv_by_section/ # Per-year CSVs extracted from PDFs (raw tables)
-│ └── processed/ # Cleaned & merged CSVs (per-year + master)
+│ ├── raw_pdfs/                  # Optional: manually downloaded PDFs
+│ ├── CPCB_Rivers_Main_Data/     # NWMP river PDFs downloaded via webscraping.py
+│ ├── extracted_csv_by_section/  # Per-year CSVs extracted from PDFs (raw tables)
+│ └── processed/                 # Cleaned & merged CSVs (per-year + master)
 │
 ├── scripts/
-│ ├── webscraping.py # Download NWMP river PDFs from CPCB website
-│ ├── extract_by_section.py # Extract river/section tables from PDFs to CSV
-│ ├── preprocess_merge.py # Clean, standardize, and merge yearly CSVs
-│ ├── river_analysis_and_plots.py # River-wise safety analysis + plots + reports
-│ ├── Extract_from_pdf.ipynb # Exploratory notebook (optional)
-│ └── requirements.txt # Python dependencies for this pipeline
+│ ├── webscraping.py                    # Download NWMP river PDFs from CPCB website
+│ ├── extract_by_section.py             # Extract river/section tables from PDFs to CSV
+│ ├── preprocess_merge.py               # Clean, standardize, and merge yearly CSVs
+│ ├── river_analysis_and_plots.py       # River-wise safety analysis + plots + reports
+│ └── requirements.txt                  # Python dependencies for this pipeline
 │
 └── outputs/
-└── river_reports/ # Per-river CSVs, JSON reports, and visualization PNGs
+| └── river_reports/                      # Per-river CSVs, JSON reports, and visualization PNGs
 
 ---
 
@@ -125,16 +124,7 @@ data/extracted_csv_by_section/water_quality_by_section_<year>.csv
 
 ---
 
-### 4.5 `Extract_from_pdf.ipynb`
-
-**Role:** Exploratory notebook.
-
-- Used during development to experiment with PDF extraction and inspect tables manually.
-- Not required for running the final automated pipeline (optional in submission).
-
----
-
-### 4.6 `requirements.txt`
+### 4.5 `requirements.txt`
 
 **Role:** Dependency specification.
 
